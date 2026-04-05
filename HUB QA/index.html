@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hub de Gestión Q1 - Calidad</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Chosen Palette: Slate & Indigo Professional -->
+    <!-- Application Structure Plan: Un centro de navegación basado en tarjetas con un sistema de acceso previo. El usuario ingresa un código que filtra la visibilidad de los recursos. Se han reemplazado los emojis por iconos de Font Awesome para un acabado más profesional y ejecutivo. -->
+    <!-- Visualization & Content Choices: 
+         - UI: Tarjetas con efectos de hover suaves y sombreados profundos. 
+         - Iconografía: Font Awesome 6 (Solid) para una estética moderna. 
+         - Lógica: Mantiene la privacidad por código de colaborador. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #1e293b; }
+        .card-hover { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .card-hover:hover { transform: translateY(-8px); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08); border-color: #4f46e5; }
+        .login-card { background: white; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1); border: 1px solid #f1f5f9; }
+        .fade-in { animation: fadeIn 0.6s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
+        .icon-box { transition: all 0.3s ease; }
+        .card-hover:hover .icon-box { background-color: #4f46e5; color: white; transform: scale(1.1); }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- SECCIÓN DE ACCESO (LOGIN) -->
+    <div id="login-screen" class="fixed inset-0 z-[100] flex items-center justify-center bg-slate-50 px-4">
+        <div class="login-card p-10 md:p-14 rounded-[3rem] w-full max-w-md text-center border-b-8 border-indigo-600">
+            <div class="w-24 h-24 bg-indigo-50 text-indigo-600 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-xl shadow-indigo-100/50 text-4xl">
+                <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <h1 class="text-3xl font-black text-slate-800 tracking-tight uppercase italic leading-none">Acceso<br>Confidencial</h1>
+            <p class="text-slate-400 mt-4 text-sm font-medium italic">Ingresa tu credencial para visualizar los resultados de Q1.</p>
+            
+            <div class="mt-10 space-y-4">
+                <input type="password" id="access-code" placeholder="CÓDIGO" 
+                    class="w-full px-6 py-5 rounded-2xl border-2 border-slate-100 focus:border-indigo-500 outline-none transition-all text-center text-2xl font-mono tracking-widest bg-slate-50 uppercase"
+                    onkeypress="if(event.key === 'Enter') checkAccess()">
+                
+                <button onclick="checkAccess()" 
+                    class="w-full bg-slate-900 hover:bg-black text-white font-bold py-5 rounded-2xl transition-all shadow-xl flex items-center justify-center gap-3 text-lg uppercase tracking-widest italic">
+                    Validar Acceso <i class="fa-solid fa-chevron-right text-sm"></i>
+                </button>
+            </div>
+            <p id="error-msg" class="text-red-500 text-xs mt-6 hidden font-bold animate-pulse">Código no autorizado.</p>
+        </div>
+    </div>
+
+    <!-- CONTENIDO DEL HUB -->
+    <div id="main-portal" class="hidden fade-in flex-1 flex flex-col">
+        <header class="bg-white border-b border-slate-200 py-6 px-6 shadow-sm sticky top-0 z-50">
+            <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="flex items-center gap-5">
+                    <div class="w-12 h-12 bg-indigo-600 text-white rounded-xl flex items-center justify-center text-xl shadow-lg shadow-indigo-200">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-black text-slate-800 uppercase tracking-tighter leading-none italic">Calidad Hub</h2>
+                        <p class="text-[10px] text-indigo-500 font-black uppercase tracking-[0.2em] mt-1 italic">Reportes Trimestrales 2026</p>
+                    </div>
+                </div>
+                <button onclick="location.reload()" class="text-[10px] font-black text-slate-400 hover:text-red-500 flex items-center gap-2 transition-colors uppercase tracking-widest bg-slate-50 px-5 py-2.5 rounded-full border border-slate-200 italic">
+                    <i class="fa-solid fa-power-off"></i> Finalizar Sesión
+                </button>
+            </div>
+        </header>
+
+        <main class="max-w-6xl mx-auto p-8 md:p-16 flex-1">
+            <div class="mb-14 text-center md:text-left">
+                <h3 class="text-4xl font-black text-slate-800 tracking-tight italic">Panel de Control Operativo</h3>
+                <p class="text-slate-400 mt-3 text-lg font-medium leading-relaxed">Selecciona el perfil correspondiente para desplegar el análisis de performance detallado.</p>
+            </div>
+
+            <!-- GRID DE TARJETAS -->
+            <div id="links-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+                <!-- Inyectado dinámicamente -->
+            </div>
+        </main>
+
+        <footer class="py-8 text-center border-t border-slate-100 bg-white">
+            <p class="text-[10px] font-black text-slate-300 uppercase tracking-[0.4em] italic">Confidencialidad Nivel 1 | Site Management</p>
+        </footer>
+    </div>
+
+    <script>
+        // =========================================================================
+        // 🛠️ CONFIGURACIÓN: PEGA TUS ENLACES DE CADA ARCHIVO ABAJO
+        // =========================================================================
+        const monitorLinks = {
+            'manager': '#',  https://feedback-q1-geral.netlify.app/
+            'samuel': '#',  https://feedback-q1-26-samuelgesse.netlify.app/ 
+            'gabriela': '#',https://feedback-q1-gabrielarocha.netlify.app/
+            'maria': '#',   https://feedback-q1-26-mariabarrios.netlify.app/
+            'juan': '#',    https://famous-starlight-305103.netlify.app/ 
+            'daniela': '#'  https://feedback-q1-26-danielaalmeida.netlify.app/
+ 
+        };
+
+        const PASSWORDS = {
+            'LIDER25': 'manager',
+            'SAMUEL25': 'samuel',
+            'GABRIELA25': 'gabriela',
+            'MARIA25': 'maria',
+            'JUAN25': 'juan',
+            'DANI25': 'daniela'
+        };
+
+        const monitorData = [
+            { id: 'manager', name: 'Reporte Gerencial', role: 'Visión Estratégica', icon: 'fa-solid fa-briefcase', desc: 'KPIs globales, métricas por IA y plan de transición del equipo.' },
+            { id: 'samuel', name: 'Samuel Gesse', role: 'Senior QA Analyst', icon: 'fa-solid fa-medal', desc: 'Liderazgo técnico, gestión de Mokcalls y acuerdos de cadencia.' },
+            { id: 'gabriela', name: 'Gabriela Rocha', role: 'QA Analyst', icon: 'fa-solid fa-list-check', desc: 'Desempeño operativo, auditorías aleatorias y gestión del tiempo.' },
+            { id: 'maria', name: 'Maria Barrios', role: 'QA Analyst', icon: 'fa-solid fa-lightbulb', desc: 'Análisis de Bottom Performers y actualización del manual de criterios.' },
+            { id: 'juan', name: 'Juan Filetti', role: 'QA Analyst', icon: 'fa-solid fa-user-plus', desc: 'Resultados de onboarding, inmersión en Salesforce y escalabilidad.' },
+            { id: 'daniela', name: 'Daniela Almeida', role: 'QA Analyst', icon: 'fa-solid fa-brain', desc: 'Agudeza analítica, Conocimiento de Producto y matriz de prioridades.' }
+        ];
+
+        function checkAccess() {
+            const input = document.getElementById('access-code');
+            const code = input.value.trim().toUpperCase();
+            const role = PASSWORDS[code];
+
+            if (role) {
+                document.getElementById('login-screen').classList.add('hidden');
+                document.getElementById('main-portal').classList.remove('hidden');
+                renderLinks(role);
+            } else {
+                document.getElementById('error-msg').classList.remove('hidden');
+                input.value = '';
+                input.focus();
+            }
+        }
+
+        function renderLinks(role) {
+            const container = document.getElementById('links-container');
+            container.innerHTML = '';
+
+            const itemsToShow = (role === 'manager') 
+                ? monitorData 
+                : monitorData.filter(m => m.id === role);
+
+            itemsToShow.forEach(item => {
+                const url = monitorLinks[item.id];
+                const card = document.createElement('a');
+                card.href = url;
+                card.target = "_blank";
+                card.className = "card-hover bg-white p-10 rounded-[3rem] border border-slate-100 flex flex-col items-center text-center space-y-6 relative overflow-hidden group shadow-sm";
+                
+                card.innerHTML = `
+                    <div class="icon-box w-20 h-20 bg-slate-50 text-indigo-600 rounded-[2rem] flex items-center justify-center text-3xl shadow-inner relative z-10 transition-all duration-300">
+                        <i class="${item.icon}"></i>
+                    </div>
+                    <div class="relative z-10">
+                        <h4 class="text-2xl font-black text-slate-800 italic leading-tight">${item.name}</h4>
+                        <p class="text-[10px] font-black text-indigo-500 uppercase tracking-[0.2em] mt-2 italic">${item.role}</p>
+                        <p class="text-xs text-slate-400 mt-4 leading-relaxed px-4 italic">${item.desc}</p>
+                    </div>
+                    <div class="pt-4 w-full relative z-10">
+                        <span class="inline-flex items-center justify-center w-full py-4 bg-slate-900 text-white rounded-2xl font-bold text-sm group-hover:bg-indigo-600 transition-all gap-3 uppercase tracking-tighter italic">
+                            Abrir Feedback <i class="fa-solid fa-arrow-right-long text-xs"></i>
+                        </span>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+    </script>
+</body>
+</html>
